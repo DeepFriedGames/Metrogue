@@ -1,0 +1,2 @@
+com/deepfried/game/desktop/DesktopLauncher.java
+ com.deepfried.game.desktop.DesktopLauncher

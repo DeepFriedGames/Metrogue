@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-gwt:2.1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-gwt/2.1.0/4a7059b99d3c004c58dd17b2f37e173c6dd3b89b/gdx-controllers-gwt-2.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-gwt/2.1.0/59c2f838e12cd05f9b2d46f590e4fd52e9588795/gdx-controllers-gwt-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

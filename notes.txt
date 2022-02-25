@@ -1,0 +1,34 @@
+Items
+	tier 0 obstacles (50% no obstacle, 50% prior tier 0)
+	tier 1 obstacles (60% tier 0 obstacle, 40% prior tier 1)
+	tier 2 obstacles (60% tier 1 obstacle, 40% prior tier 2)
+Obstacles
+	
+Bosses
+	tier 0 requires last tier 0 item
+	tier 1 requires last tier 1 item
+	tier 2 requires last tier 2 item
+	tier 3 requires other 3 bosses defeated
+Transport
+	requires all tier 0 items from the area
+Upgrades
+	random obstacles (50% tier 0, 30% tier 1, 20% tier 2)
+
+This doesn't work because placing an obstacle needs to know
+what item is required.
+need a sequence
+need a pool of sectors (items, obstacles, cross-roads, generic)
+	pull from the pool, into the sequence
+	
+the start gets added to the pool
+start
+	generic is added to the pool
+
+generic
+	another generic or cross-road is added to the pool
+	
+cross-road
+	choose [2, 3] one generic, the rest obstacles.
+	
+obstacle
+	choose [1, 2] generic

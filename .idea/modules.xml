@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Metrogue.iml" filepath="$PROJECT_DIR$/.idea/modules/Metrogue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/Metrogue.android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/Metrogue.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/Metrogue.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/Metrogue.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/Metrogue.desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/Metrogue.desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/Metrogue.html.iml" filepath="$PROJECT_DIR$/.idea/modules/html/Metrogue.html.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ios/Metrogue.ios.iml" filepath="$PROJECT_DIR$/.idea/modules/ios/Metrogue.ios.iml" />
+    </modules>
+  </component>
+</project>
