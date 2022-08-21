@@ -1,86 +1,68 @@
-com/deepfried/game/TileID.java
- com.deepfried.game.TileID
 com/deepfried/game/GdxGame.java
  com.deepfried.game.GdxGame
-com/deepfried/game/Room.java
- com.deepfried.game.Room
-com/deepfried/game/RoomGenerator.java
- com.deepfried.game.RoomGenerator
- com.deepfried.game.RoomGenerator$1
- com.deepfried.game.RoomGenerator$NodeConnection
- com.deepfried.game.RoomGenerator$NodeGraphPath
- com.deepfried.game.RoomGenerator$RoomNode
- com.deepfried.game.RoomGenerator$SectorPattern
-com/deepfried/system/GravitySystem.java
- com.deepfried.system.GravitySystem
+com/deepfried/component/PlayerComponent.java
+ com.deepfried.component.PlayerComponent
+com/deepfried/component/CollapsibleComponent.java
+ com.deepfried.component.CollapsibleComponent
+com/deepfried/component/CollisionComponent.java
+ com.deepfried.component.CollisionComponent
 com/deepfried/game/KeyItem.java
  com.deepfried.game.KeyItem
-com/deepfried/component/ControllerComponent.java
- com.deepfried.component.ControllerComponent
-com/deepfried/component/DoorComponent.java
- com.deepfried.component.DoorComponent
-com/deepfried/game/MovementType.java
- com.deepfried.game.MovementType
+com/deepfried/screen/DebugScreen.java
+ com.deepfried.screen.DebugScreen
 com/deepfried/component/DebugShapeComponent.java
  com.deepfried.component.DebugShapeComponent
 com/deepfried/component/PositionComponent.java
  com.deepfried.component.PositionComponent
+com/deepfried/component/ShapeComponent.java
+ com.deepfried.component.ShapeComponent
 com/deepfried/component/VelocityComponent.java
  com.deepfried.component.VelocityComponent
 com/deepfried/component/CameraFollowComponent.java
  com.deepfried.component.CameraFollowComponent
 com/deepfried/component/GravityComponent.java
  com.deepfried.component.GravityComponent
-com/deepfried/system/TileSystem.java
- com.deepfried.system.TileSystem
- com.deepfried.system.TileSystem$1
-com/deepfried/component/HitboxComponent.java
- com.deepfried.component.HitboxComponent
-com/deepfried/game/RoomConnection.java
- com.deepfried.game.RoomConnection
-com/deepfried/game/AreaGenerator.java
- com.deepfried.game.AreaGenerator
- com.deepfried.game.AreaGenerator$1
-com/deepfried/system/MovementSystem.java
- com.deepfried.system.MovementSystem
-com/deepfried/component/TileComponent.java
- com.deepfried.component.TileComponent
-com/deepfried/component/ColorComponent.java
- com.deepfried.component.ColorComponent
-com/deepfried/system/DebugRenderSystem.java
- com.deepfried.system.DebugRenderSystem
-com/deepfried/game/WorldArea.java
- com.deepfried.game.WorldArea
-com/deepfried/game/World.java
- com.deepfried.game.World
-com/deepfried/system/CollisionSystem.java
- com.deepfried.system.CollisionSystem
-com/deepfried/game/RectangleGraph.java
- com.deepfried.game.RectangleGraph
- com.deepfried.game.RectangleGraph$RectangleConnection
-com/deepfried/game/WorldGenerator.java
- com.deepfried.game.WorldGenerator
- com.deepfried.game.WorldGenerator$1
- com.deepfried.game.WorldGenerator$2
- com.deepfried.game.WorldGenerator$3
- com.deepfried.game.WorldGenerator$RoomPath
-com/deepfried/game/DivisionHeuristic.java
- com.deepfried.game.DivisionHeuristic
 com/deepfried/screen/LoadingScreen.java
  com.deepfried.screen.LoadingScreen
-com/deepfried/game/SectorGraph.java
- com.deepfried.game.SectorGraph
- com.deepfried.game.SectorGraph$1
- com.deepfried.game.SectorGraph$SectorConnection
- com.deepfried.game.SectorGraph$SectorNode
-com/deepfried/screen/DebugScreen.java
- com.deepfried.screen.DebugScreen
+com/deepfried/system/DebugMapRenderSystem.java
+ com.deepfried.system.DebugMapRenderSystem
+com/deepfried/system/DebugRenderSystem.java
+ com.deepfried.system.DebugRenderSystem
+com/deepfried/system/MovementSystem.java
+ com.deepfried.system.MovementSystem
+com/deepfried/screen/GameScreen.java
+ com.deepfried.screen.GameScreen
+com/deepfried/component/ColorComponent.java
+ com.deepfried.component.ColorComponent
+com/deepfried/component/OneWayComponent.java
+ com.deepfried.component.OneWayComponent
+com/deepfried/component/AnimationComponent.java
+ com.deepfried.component.AnimationComponent
+com/deepfried/system/CollisionSystem.java
+ com.deepfried.system.CollisionSystem
+com/deepfried/utility/Segment.java
+ com.deepfried.utility.Segment
+com/deepfried/system/AnimationSystem.java
+ com.deepfried.system.AnimationSystem
+com/deepfried/system/TiledMapRenderSystem.java
+ com.deepfried.system.TiledMapRenderSystem
+com/deepfried/component/DoorComponent.java
+ com.deepfried.component.DoorComponent
+com/deepfried/component/ControllerComponent.java
+ com.deepfried.component.ControllerComponent
+com/deepfried/system/TileSystem.java
+ com.deepfried.system.TileSystem
+com/deepfried/game/MovementType.java
+ com.deepfried.game.MovementType
 com/deepfried/system/ControllerSystem.java
  com.deepfried.system.ControllerSystem
  com.deepfried.system.ControllerSystem$1
-com/deepfried/game/Area.java
- com.deepfried.game.Area
-com/deepfried/system/DebugMapRenderSystem.java
- com.deepfried.system.DebugMapRenderSystem
-com/deepfried/screen/MapScreen.java
- com.deepfried.screen.MapScreen
+ com.deepfried.system.ControllerSystem$MovementState
+com/deepfried/game/DivisionHeuristic.java
+ com.deepfried.game.DivisionHeuristic
+com/deepfried/system/RenderSystem.java
+ com.deepfried.system.RenderSystem
+com/deepfried/component/JumpThroughComponent.java
+ com.deepfried.component.JumpThroughComponent
+com/deepfried/system/GravitySystem.java
+ com.deepfried.system.GravitySystem

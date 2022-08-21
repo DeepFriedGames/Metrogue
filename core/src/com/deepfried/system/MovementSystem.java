@@ -25,10 +25,7 @@ public class MovementSystem  extends EntitySystem {
         for (Entity entity : entities) {
             PositionComponent position = positions.get(entity);
             Vector2 v = VECTOR.set(velocities.get(entity));
-            if(position.tile != null)
-                    v.scl(position.tile.id.scl, 1);
 
-            position.previous.set(position);
             double x = position.x + v.x;
             double y = position.y + v.y;
             position.set((float) x, (float) y);

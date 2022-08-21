@@ -1,12 +1,16 @@
 package com.deepfried.component;
 
 import com.badlogic.ashley.core.Component;
-import com.deepfried.game.RoomConnection;
 
 public class DoorComponent implements Component {
-    public RoomConnection connection;
+    private final String toMapName;
+    public float outX, outY;
 
-    public DoorComponent(RoomConnection connection) {
-        this.connection = connection;
+    public DoorComponent(String toMapName) {
+        this.toMapName = toMapName;
+    }
+
+    public String getToMapName() {
+        return toMapName;
     }
 }

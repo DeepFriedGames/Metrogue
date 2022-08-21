@@ -10,7 +10,7 @@
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
       <configuration>
-        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/../../../html/build" />
+        <option name="BUILD_FOLDER_PATH" />
         <option name="BUILDABLE" value="true" />
       </configuration>
     </facet>
@@ -27,21 +27,22 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Metrogue.core" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.10.0:sources" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.11.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.11.0:sources" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.ashley:ashley:1.7.3:sources" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.ashley:ashley:1.7.3" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-ai:1.8.2:sources" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-ai:1.8.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.10.0:sources" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-gwt:2.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-gwt:2.1.0:sources" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.1.0:sources" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.11.0:sources" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.11.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-gwt:2.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-gwt:2.2.1:sources" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.2.1:sources" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.2.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.gwt:gwt-user:2.8.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.websocket:javax.websocket-api:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.jsinterop:jsinterop-annotations:1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.jsinterop:jsinterop-annotations:1.0.2:sources" level="project" />
     <orderEntry type="library" name="Gradle: javax.validation:validation-api:1.0.0.GA" level="project" />

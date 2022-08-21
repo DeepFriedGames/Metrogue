@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "30.0.3"
-    compileSdkVersion 30
+    compileSdkVersion 31
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -18,8 +18,8 @@ android {
     }
     defaultConfig {
         applicationId "com.deepfried.game"
-        minSdkVersion 14
-        targetSdkVersion 30
+        minSdkVersion 16
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
     }

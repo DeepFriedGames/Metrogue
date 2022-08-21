@@ -1,0 +1,64 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "landing.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "collision.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "front_layer.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "landing.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 231,
+                "y": 295.5
+            }
+        },
+        "landing.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "second_layer.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/stuar/OneDrive/Java Workspace/Metrogue/android/assets/_PNG",
+    "map.height": 39,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 45,
+    "openFiles": [
+        "landing.tmx",
+        "collision.tsx",
+        "landing.tsx",
+        "second_layer.tsx",
+        "front_layer.tsx"
+    ],
+    "project": "Metrogue.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "front_layer.tsx",
+        "second_layer.tsx",
+        "landing.tsx",
+        "collision.tsx",
+        "landing.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

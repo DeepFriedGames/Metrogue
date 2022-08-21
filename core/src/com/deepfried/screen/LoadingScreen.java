@@ -1,30 +1,27 @@
 package com.deepfried.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.deepfried.game.WorldGenerator;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 public class LoadingScreen implements Screen {
-    WorldGenerator worldGenerator;
-    Thread worldGenThread;
+    private final AssetManager assetManager;
+
+    public LoadingScreen(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
 
     @Override
     public void show() {
-        worldGenerator = new WorldGenerator();
-        worldGenThread = new Thread(worldGenerator);
-        worldGenThread.start();
 
     }
 
     @Override
     public void render(float delta) {
-        if(worldGenerator.done) {
-//            ((Game) Gdx.app.getApplicationListener()).setScreen(new DebugScreen(worldGenerator.world));
-
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new MapScreen(worldGenerator.world.areas.first()));
-        }
-
+//        System.out.println(assetManager.getProgress());
+        ScreenUtils.clear(Color.BLACK);
     }
 
     @Override

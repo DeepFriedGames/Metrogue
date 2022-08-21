@@ -6,301 +6,455 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.deepfried.component.CollisionComponent;
 import com.deepfried.component.ControllerComponent;
-import com.deepfried.component.HitboxComponent;
+import com.deepfried.component.GravityComponent;
+import com.deepfried.component.PlayerComponent;
 import com.deepfried.component.PositionComponent;
+import com.deepfried.component.ShapeComponent;
 import com.deepfried.component.VelocityComponent;
-import com.deepfried.game.MovementType;
-import com.deepfried.screen.DebugScreen;
-import com.deepfried.screen.MapScreen;
-
-import static com.deepfried.game.Room.PPT;
 
 public class ControllerSystem extends EntitySystem {
-    private final static float MAX_DASH = 2f;
-    private final static float DASH_ACCELERATION = 0.0625f;
+	private static final float WALL_GRAB_MARGIN = 45/16f;
+    private static final float TURNING_ACCELERATION = 0.5f;
+    private static final float JUMP_DECELERATION = 1/3f;
     private ImmutableArray<Entity> entities;
-    private Screen previousScreen, currentScreen;
+    private final Array<Integer> pressed = new Array<>();
 
     private final ComponentMapper<ControllerComponent> controllers = ComponentMapper.getFor(ControllerComponent.class);
-    private final ComponentMapper<VelocityComponent> velocities = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<GravityComponent> gravities = ComponentMapper.getFor(GravityComponent.class);
+    private final ComponentMapper<ShapeComponent> shapes = ComponentMapper.getFor(ShapeComponent.class);
+    private final ComponentMapper<PlayerComponent> players = ComponentMapper.getFor(PlayerComponent.class);
     private final ComponentMapper<PositionComponent> positions = ComponentMapper.getFor(PositionComponent.class);
-    private final ComponentMapper<HitboxComponent> hitboxes = ComponentMapper.getFor(HitboxComponent.class);
+    private final ComponentMapper<VelocityComponent> velocities = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<CollisionComponent> collisions = ComponentMapper.getFor(CollisionComponent.class);
 
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.all(ControllerComponent.class, VelocityComponent.class).get());
-        currentScreen = ((Game) Gdx.app.getApplicationListener()).getScreen();
+        entities = engine.getEntitiesFor(Family.all(ControllerComponent.class,
+                GravityComponent.class, ShapeComponent.class, PlayerComponent.class,
+                PositionComponent.class, VelocityComponent.class).get());
     }
 
     public void update(float deltaTime) {
         for (Entity entity : entities) {
-
-            processInputs(entity);
-            updateState(entity);
-            setVelocity(entity);
+            handleInputs(entity);
         }
     }
 
-    private void processInputs(Entity entity) {
-        VelocityComponent velocity = velocities.get(entity);
-        ControllerComponent controller = controllers.get(entity);
+    private void handleInputs(Entity entity) {
+        ControllerComponent codes = controllers.get(entity);
+        PlayerComponent player = players.get(entity);
+        PositionComponent p = positions.get(entity);
+        Rectangle box = shapes.get(entity).getRectangle();
 
-        if(velocity.x == 0 &&
-                controller.movement == MovementType.SPIN_JUMP) {
-            controller.momentum = 0;
-            controller.dash = 0;
+        TileSystem tileSystem = getEngine().getSystem(TileSystem.class);
+        CollisionSystem collisionSystem = getEngine().getSystem(CollisionSystem.class);
+        float right = p.x + box.width;
+        float left = p.x;
+        float centerY = p.y + box.height / 2;
+        boolean wallRight = tileSystem.isSolid(right + WALL_GRAB_MARGIN, centerY)
+                || collisionSystem.isPathObstructed(right, centerY, right + WALL_GRAB_MARGIN, centerY);
+        boolean wallLeft = tileSystem.isSolid(left - WALL_GRAB_MARGIN, centerY)
+                || collisionSystem.isPathObstructed(left, centerY, left - WALL_GRAB_MARGIN, centerY);
+
+
+        if(player.next != null) {
+            if (player.stateChangeProgress >= 1) {
+                player.current = player.next;
+                player.next = null;
+            } else {
+                player.stateChangeProgress += 0.5f;
+            }
         }
 
-        if(Gdx.input.isKeyPressed(controller.left) ^ Gdx.input.isKeyPressed(controller.right)) {
-            switch (controller.movement) {
+        checkFalling(entity);
 
-                case WALKING:
-                    dash(controller);
-                case MORPH:
-                case JUMP:
-                case SPIN_JUMP:
-                case FALLING:
-                    direction(controller);
-                case LONG_JUMP:
-                    momentum(controller);
-                    break;
+        if(player.current == MovementState.WALL_GRABBING)
+            if(!wallLeft && !wallRight)
+                setState(entity, MovementState.FALLING);
 
-                case TURNAROUND:
-                    direction(controller);
-                case SLIDE:
-                    decelerate(controller);
-                    break;
-            }
+		if(player.current == MovementState.SLIDING) {
+			if(decelerate(entity))
+				setState(entity, MovementState.CRAWLING);
+				
+        } else if(isButtonPressed(entity, codes.left) ^ isButtonPressed(entity, codes.right)) {
+            accelerate(entity);
+            if(isButtonPressed(entity, codes.left))
+                updateDirection(entity, PlayerComponent.LEFT);
+            if(isButtonPressed(entity, codes.right))
+                updateDirection(entity, PlayerComponent.RIGHT);
+
+			switch(player.current) {
+				case STANDING:
+				case WALKING:
+				case RUNNING:
+				case CRAWLING:
+					setState(entity, isButtonPressed(entity, codes.run) ? MovementState.RUNNING : MovementState.WALKING);
+					break;
+				case JUMPING:
+				case SPINNING:
+				case FALLING:
+					if((isButtonPressed(entity, codes.left) && wallLeft)
+					 || (isButtonPressed(entity, codes.right) && wallRight))
+						setState(entity, MovementState.WALL_GRABBING);
+					break;
+				case WALL_GRABBING:
+				    if(player.next == null) {
+                        if ((isButtonPressed(entity, codes.left) && wallLeft)
+                                || (isButtonPressed(entity, codes.right) && wallRight))
+                            slowDecent(entity);
+                    }
+					break;
+			}
         } else {
-            decelerate(controller);
-
+			boolean stopped = decelerate(entity);
+			switch(player.current) {
+				case RUNNING:
+				case WALKING:
+					if(stopped) setState(entity, MovementState.STANDING);
+					break;
+				case WALL_GRABBING:
+					if(!isButtonPressed(entity, codes.left) && !isButtonPressed(entity, codes.right))
+						setState(entity, MovementState.FALLING);
+					break;
+			}
         }
 
-        if(/*position.grounded && */controller.movement != MovementType.MORPH && Gdx.input.isKeyJustPressed(controller.jump)) {
-            switch (controller.movement) {
-                case TURNAROUND:
-                    velocity.y = 5.046875f;
-                    break;
-                case SPIN_JUMP:
-                    if(!wallGrabbing(entity))
-                        break;
+        if(isButtonPressed(entity, codes.up) ^ isButtonPressed(entity, codes.down)){
+			if(isButtonPressed(entity, codes.up)) {
+			    if(player.current == MovementState.CRAWLING)
+			        setState(entity, MovementState.STANDING);
+			    else
+                    setAim(entity, PlayerComponent.AIM_UP);
+            }
+			if(isButtonPressed(entity, codes.down)) {
+			    collisions.get(entity).ignore |= CollisionComponent.SEMISOLID;
+			    if(player.current == MovementState.STANDING)
+			        setState(entity, MovementState.CRAWLING);
+                else
+                    setAim(entity, PlayerComponent.AIM_DOWN);
+            }
+        } else if(isButtonPressed(entity, codes.aimLock)){
+            setAim(entity, PlayerComponent.AIM_FREE);
+        } else {
+			//TODO make conditions for when the player sheathes weapon
+			setAim(entity, PlayerComponent.WEAPON_OUT);
+		}
+		
+        if(isButtonJustPressed(entity, codes.slide)) {
+            switch (player.current) {
                 case WALKING:
-                    velocity.y = 4.765625f;
+                case RUNNING:
+                    setState(entity, MovementState.SLIDING);
                     break;
-                case SLIDE:
-                    velocity.y = 2.3828125f;
+                case STANDING:
+                    setState(entity, MovementState.CRAWLING);
                     break;
-                default:
+                case SLIDING:
+                    setState(entity, isButtonPressed(entity, codes.run) ? MovementState.RUNNING : MovementState.WALKING);
+                    break;
+                case CRAWLING:
+                    setState(entity, MovementState.STANDING);
                     break;
             }
         }
-        if(!Gdx.input.isKeyPressed(controller.jump) && velocity.y > 0)
-            velocity.y = 0;
 
-        if(Gdx.input.isKeyJustPressed(controller.pause)) {
-            if ((((Game) Gdx.app.getApplicationListener()).getScreen().getClass()).equals(MapScreen.class)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(previousScreen);
-
-            }
-            if((((Game) Gdx.app.getApplicationListener()).getScreen().getClass()).equals(DebugScreen.class)){
-                DebugScreen screen = ((DebugScreen) ((Game) Gdx.app.getApplicationListener()).getScreen());
-                previousScreen = screen;
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MapScreen(screen.world.areas.first()));
-
-            }
+        if(isButtonPressed(entity, codes.run)){
+            if(player.current == MovementState.WALKING)
+                setState(entity, MovementState.RUNNING);
+        } else {
+            if(player.current == MovementState.RUNNING)
+                setState(entity, MovementState.WALKING);
         }
+		
+        if(isButtonJustPressed(entity, codes.jump)) {
+            jump(entity);
+
+			switch(player.current) {
+				case STANDING:
+					setState(entity, MovementState.JUMPING);
+					break;
+                case WALL_GRABBING:
+                    if(wallLeft)
+                        velocities.get(entity).x = player.current.max_velocity;
+                    if(wallRight)
+                        velocities.get(entity).x = -player.current.max_velocity;
+				case WALKING:
+				case RUNNING:
+					setState(entity, MovementState.SPINNING);
+					break;				
+			}
+        }
+        if(!isButtonPressed(entity, codes.jump)) {
+            endJump(entity);
+        }
+
+        if(isButtonJustPressed(entity, codes.attack)) {
+            attack(entity);
+			if(player.aim == PlayerComponent.RESTING)
+					setAim(entity, PlayerComponent.WEAPON_OUT);
+			if(player.current == MovementState.SPINNING || player.current == MovementState.WALL_GRABBING)
+					setState(entity, MovementState.JUMPING);
+        }
+
+        if(codes.controller != null)
+            queryPressed(codes.controller);
+
+//        debugPrint(entity);
+    }
+
+    private void queryPressed(Controller controller) {
+        for(int code = controller.getMinButtonIndex(); code < controller.getMaxButtonIndex(); code++){
+            if(controller.getButton(code))
+                if(!pressed.contains(code, false)) pressed.add(code);
+            else
+                pressed.removeValue(code, false);
+        }
+    }
+
+    private void slowDecent(Entity entity) {
+        VelocityComponent velocity = velocities.get(entity);
+
+        if(velocity.y < -1/2f)
+            velocity.y = -1/2f;
 
     }
 
-    private void updateState(Entity entity) {
-        VelocityComponent velocity = velocities.get(entity);
-        ControllerComponent controller = controllers.get(entity);
-        PositionComponent position = positions.get(entity);
+    private boolean isButtonJustPressed(Entity entity, int code) {
+        if(controllers.get(entity).controller != null) {
+            Controller controller = controllers.get(entity).controller;
+            if(!pressed.contains(code, false))
+                return controller.getButton(code);
+        }
+        return Gdx.input.isKeyJustPressed(code);
+    }
 
-        MovementType newMovement = null;
+    private boolean isButtonPressed(Entity entity, int code) {
+        if(controllers.get(entity).controller != null) {
+            Controller controller = controllers.get(entity).controller;
+            return controller.getButton(code);
+        }
+        return Gdx.input.isKeyPressed(code);
+    }
 
-        if(controller.low) {
-            if (Gdx.input.isKeyPressed(controller.right) && controller.horizontal_positive
-                    || Gdx.input.isKeyPressed(controller.left) && !controller.horizontal_positive
-                    || Gdx.input.isKeyJustPressed(controller.up))
-                setLow(entity, false);
-            if (Gdx.input.isKeyJustPressed(controller.down)) {
-                newMovement = MovementType.MORPH;
-                setLow(entity, false);
-            }
-            if (Gdx.input.isKeyJustPressed(controller.jump)) {
-                positions.get(entity).y += 12;
-                newMovement = MovementType.JUMP;
-                setLow(entity, false);
-            }
-        } else if(Gdx.input.isKeyJustPressed(controller.down))
-            setLow(entity, true);
+    private void debugPrint(Entity entity) {
+//        System.out.println("State progress: " + player.stateChangeProgress);
+        System.out.println("Current State: " + players.get(entity).current);
+        System.out.println("Next State: " + players.get(entity).next);
+        System.out.println("Direction: " + players.get(entity).direction);
+        System.out.println("velocity.y: " + velocities.get(entity).y);
+//        System.out.println("Aim: " + player.aim);
+    }
 
-        switch (controller.movement) {
-            case WALKING:
-                if((Gdx.input.isKeyJustPressed(controller.left) && controller.horizontal_positive) ||
-                        (Gdx.input.isKeyJustPressed(controller.right) && !controller.horizontal_positive))
-                    newMovement = MovementType.TURNAROUND;
+    private void checkFalling(Entity entity) {
+        GravityComponent gravity = gravities.get(entity);
+        PlayerComponent player = players.get(entity);
 
-                if(!position.grounded)
-                    newMovement = MovementType.FALLING;
-
-                if(Gdx.input.isKeyJustPressed(controller.jump)) {
-                    if(velocity.x == 0)
-                        newMovement = MovementType.JUMP;
-                    if(Math.abs(velocity.x) > 0)
-                        newMovement = MovementType.SPIN_JUMP;
-                }
-
-                if(controller.dash > MAX_DASH - DASH_ACCELERATION && Gdx.input.isKeyPressed(controller.run) && Gdx.input.isKeyJustPressed(controller.down))
-                    newMovement = MovementType.SLIDE;
-
-                break;
-            case TURNAROUND:
-                if(controller.momentum == 0)
-                    newMovement = MovementType.WALKING;
-
-                if(Gdx.input.isKeyPressed(controller.jump)) {
-                    positions.get(entity).y += 8;
-                    newMovement = MovementType.SPIN_JUMP;
-                }
-                break;
-            case MORPH:
-                if(Gdx.input.isKeyJustPressed(controller.up) || Gdx.input.isKeyJustPressed(controller.jump)) {
-                    if(position.grounded) {
-                        newMovement = MovementType.WALKING;
-                        setLow(entity, true);
-                    } else {
-                        newMovement = MovementType.FALLING;
-                    }
-                }
-                break;
-            case SPIN_JUMP:
-                int[] keys = new int[]{controller.down, controller.shoot, controller.up, controller.shoulderL, controller.shoulderR};
-                for(int key : keys) {
-                    if(Gdx.input.isKeyJustPressed(key)) {
-                        newMovement = MovementType.FALLING;
-                        break;
-                    }
-                }
-            case LONG_JUMP:
-            case JUMP:
+        switch(player.current) {
+            case WALL_GRABBING:
+            case JUMPING:
+            case SPINNING:
             case FALLING:
-                if(position.grounded) {
-                    newMovement = MovementType.WALKING;
-                    setLow(entity, false);
-                }
+                if(gravity.grounded)
+                    setState(entity, MovementState.STANDING);
                 break;
-            case SLIDE:
-                if(!position.grounded)
-                    newMovement = MovementType.FALLING;
-
-                else if(controller.momentum == 0)
-                    newMovement = MovementType.MORPH;
-
-                else if(Gdx.input.isKeyJustPressed(controller.jump))
-                    newMovement = MovementType.LONG_JUMP;
+            default:
+                if(!gravity.grounded)
+                    setState(entity, MovementState.FALLING);
                 break;
-        }
-        if(newMovement != null && setHeight(entity, newMovement)) {
-            controller.movement = newMovement;
-            System.out.println(controller.movement + ", low: " + controller.low);
         }
     }
 
-    private void setVelocity(Entity entity) {
+    private void jump(Entity entity) {
+        PlayerComponent player = players.get(entity);
+        if(player.current.jump_velocity == 0) return;
+
         VelocityComponent velocity = velocities.get(entity);
-        ControllerComponent cont = controllers.get(entity);
-        if(cont.horizontal_positive)
-            velocity.x = cont.momentum + cont.dash;
-        else
-            velocity.x = -cont.momentum - cont.dash;
+
+		velocity.y = player.current.jump_velocity;
     }
 
-    private boolean wallGrabbing(Entity entity) {
-        int margin = 8;
-        PositionComponent p = positions.get(entity);
-        HitboxComponent box = hitboxes.get(entity);
-        ControllerComponent controller = controllers.get(entity);
+    private void endJump(Entity entity) {
+        VelocityComponent velocity = velocities.get(entity);
+        if(velocity.y > 0) velocity.y -= JUMP_DECELERATION;
+    }
 
-        if(currentScreen.getClass() != DebugScreen.class) return false;
+    private void attack(Entity entity) {
+        //TODO this
+    }
 
+    private void setAim(Entity entity, int aim) {
+        PlayerComponent player = players.get(entity);
+        player.aim = aim;
+    }
+
+    private void setState(Entity entity, MovementState state) {
+        PlayerComponent player = players.get(entity);
+
+        if(player.next != null) return;
+		if(player.current == state) return;
+
+		if(!setHeight(entity, state)) {
+			//setting the new height is unsuccessful
+			switch(player.current) {
+				case SLIDING:
+				case JUMPING:
+				case FALLING:
+				case CRAWLING:
+					return;
+				case SPINNING:
+				case WALL_GRABBING:
+					player.next = MovementState.CRAWLING;
+					setHeight(entity, player.next);
+					return;
+			}
+		}
+
+        player.next = state;
+		player.stateChangeProgress = 0;
+    }
+	
+	private boolean setHeight(Entity entity, MovementState next) {
+        Rectangle rectangle = shapes.get(entity).getRectangle();
+        Rectangle current = Rectangle.tmp.set(rectangle).setPosition(positions.get(entity));
+
+        boolean solidAbove = false, solidBelow = false;
         TileSystem tileSystem = getEngine().getSystem(TileSystem.class);
+        CollisionSystem collisionSystem = getEngine().getSystem(CollisionSystem.class);
 
-        float h = box.getHeight();
-        int ceil = MathUtils.ceil(h / PPT);
-        for(int i = 0; i <= ceil; i++) {
-            float y = p.y + Math.min(h, i * PPT);
-            if((tileSystem.isSolid(p.x - margin, y) && controller.horizontal_positive) ||
-                    (tileSystem.isSolid(p.x + box.width + margin, y) && !controller.horizontal_positive))
-                return true;
+        float[] sensorsX = tileSystem.getSensors(current.x, current.x + current.width, tileSystem.tileLayer.getTileWidth());
 
-        }
-        return false;
-    }
-
-    private void momentum(ControllerComponent controller) {
-        if(controller.momentum < controller.movement.max_momentum)
-            controller.momentum += controller.movement.acceleration;
-        if(controller.momentum > controller.movement.max_momentum)
-            controller.momentum = controller.movement.max_momentum;
-    }
-
-    private void dash(ControllerComponent controller) {
-        if(Gdx.input.isKeyPressed(controller.run) && controller.dash < MAX_DASH) {
-                    controller.dash += DASH_ACCELERATION;
-        }
-    }
-
-    private void direction(ControllerComponent controller) {
-        if(((Gdx.input.isKeyPressed(controller.left) && controller.horizontal_positive) ||
-                (Gdx.input.isKeyPressed(controller.right) && !controller.horizontal_positive))) {
-            controller.momentum = 0;
-            controller.dash = 0;
-            controller.horizontal_positive = !controller.horizontal_positive;
-        }
-    }
-
-    private void decelerate(ControllerComponent controller) {
-        controller.dash = 0;
-        controller.momentum += controller.movement.deceleration;
-
-        if(controller.momentum < 0)
-            controller.momentum = 0;
-    }
-
-    private void setLow(Entity entity, boolean low) {
-        controllers.get(entity).low = low;
-        setHeight(entity, controllers.get(entity).movement);
-    }
-
-    private boolean setHeight(Entity entity, MovementType move) {
-        PositionComponent p = positions.get(entity);
-        HitboxComponent box = hitboxes.get(entity);
-        ControllerComponent controller = controllers.get(entity);
-
-        if(currentScreen.getClass() != DebugScreen.class) return false;
-
-        TileSystem tileSystem = getEngine().getSystem(TileSystem.class);
-
-        float w = box.getWidth();
-        int ceil = MathUtils.ceil(w / PPT);
-        for(int i = 0; i <= ceil; i++) {
-            float x = p.x + Math.min(w, i * PPT);
-            //try the movement's height change
-            if(controller.low || tileSystem.isSolid(x, p.y + move.height)) {
-                //try getting low
-                if(tileSystem.isSolid(x, p.y + move.low_height)) {
-                    return false;
-                }
-                controller.low = true;
+        //from bottom to new height
+        float startY = current.y + current.height;
+        float endY = current.y + next.height;
+        float[] sensorsY = tileSystem.getSensors(startY, endY, tileSystem.tileLayer.getTileHeight());
+        loopX:
+        for(float sensorX : sensorsX) {
+            if(collisionSystem.isPathObstructed(sensorX, startY, sensorX, endY)) {
+                solidAbove = true;
+                break;
             }
+            for (float sensorY : sensorsY)
+                if (tileSystem.isSolid(sensorX, sensorY)) {
+                    //try to adjust height from bottom second
+                    solidAbove = true;
+                    break loopX;
+                }
         }
-        box.setHeight(controller.low ? move.low_height : move.height);
-        return true;
+
+        //from top to new bottom
+        startY = current.y + current.height - next.height;
+        endY = current.y;
+        sensorsY = tileSystem.getSensors(startY, endY, tileSystem.tileLayer.getTileHeight());
+        loopX:
+        for(float sensorX: sensorsX) {
+            if(collisionSystem.isPathObstructed(sensorX, startY, sensorX, endY)) {
+                solidBelow = true;
+                break;
+            }
+            for (float sensorY : sensorsY)
+                if (tileSystem.isSolid(sensorX, sensorY)) {
+                    solidBelow = true;
+                    break loopX;
+                }
+        }
+        switch (next) {
+            case STANDING:
+            case WALKING:
+            case RUNNING:
+            case SLIDING:
+            case CRAWLING:
+            case FALLING:
+                if(next.height <= current.height || !solidAbove) {
+                    rectangle.setHeight(next.height);
+                    return true;
+                }
+                if(!solidBelow) {
+                    positions.get(entity).y = current.y + current.height - next.height;
+                    rectangle.setHeight(next.height);
+                    return true;
+                }
+                break;
+            case JUMPING:
+            case SPINNING:
+            case WALL_GRABBING:
+                if(next.height <= current.height || !solidBelow) {
+                    positions.get(entity).y = current.y + current.height - next.height;
+                    rectangle.setHeight(next.height);
+                    return true;
+                }
+                if(!solidAbove) {
+                    rectangle.setHeight(next.height);
+                    return true;
+                }
+                break;
+        }
+		
+		return false;
+	}
+
+    private void updateDirection(Entity entity, float direction) {
+        PlayerComponent player = players.get(entity);
+        if(MathUtils.isEqual(player.direction, direction, 0.001f))
+            player.direction = direction;
+        else
+            player.direction = MathUtils.lerp(player.direction, direction, TURNING_ACCELERATION);
+    }
+
+    private boolean decelerate(Entity entity) {
+        PlayerComponent player = players.get(entity);
+        VelocityComponent velocity = velocities.get(entity);
+
+        if(player.direction > 0)
+            if (velocity.x <= 0) velocity.x = 0;
+            else velocity.x -= player.current.deceleration;
+        if(player.direction < 0)
+            if (velocity.x >= 0) velocity.x = 0;
+            else velocity.x += player.current.deceleration;
+
+        return velocity.x == 0;
+
+    }
+
+    private void accelerate(Entity entity) {
+        PlayerComponent player = players.get(entity);
+        VelocityComponent velocity = velocities.get(entity);
+
+        if(player.direction > 0 && velocity.x < player.current.max_velocity)
+            velocity.x += player.current.acceleration;
+        if(player.direction < 0 && velocity.x > -player.current.max_velocity)
+            velocity.x -= player.current.acceleration;
+
+    }
+
+    public enum MovementState {
+        STANDING(0, 3/16f, 0f, 62/16f, 27f),
+        WALKING(3/16f, 3/16f, 20/16f, 62/16f, 27f),
+        RUNNING(4/16f, 2/16f, 31/16f, 62/16f, 27f),
+        SLIDING(0, 1/32f, 31/16f, 36/16f, 10f),
+        CRAWLING(2/16f, 9/16f, 17/16f, 0, 10f),
+        JUMPING(8/16f, 3/16f, 16/16f, 0, 20f),
+        FALLING(8/16f, 3/16f, 16/16f, 0, 20f),
+        SPINNING(3/16f, 0, 25/16f, 0, 12f),
+        WALL_GRABBING(1/32f, 0, 25/16f, 50/16f, 18f);
+
+        public final float acceleration;
+        public final float deceleration;
+        public final float max_velocity;
+        public final float jump_velocity;
+		public final float height;
+
+        MovementState(float acceleration, float deceleration, float max_velocity, float jump_velocity, float height) {
+            this.acceleration = acceleration;
+            this.deceleration = deceleration;
+            this.max_velocity = max_velocity;
+            this.jump_velocity = jump_velocity;
+			this.height = height;
+        }
     }
 }

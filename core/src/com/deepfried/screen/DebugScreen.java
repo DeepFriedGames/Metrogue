@@ -1,62 +1,46 @@
 package com.deepfried.screen;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.deepfried.component.CameraFollowComponent;
-import com.deepfried.game.Area;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.deepfried.system.CollisionSystem;
-import com.deepfried.component.ColorComponent;
-import com.deepfried.component.ControllerComponent;
 import com.deepfried.system.ControllerSystem;
 import com.deepfried.system.DebugRenderSystem;
-import com.deepfried.component.GravityComponent;
 import com.deepfried.system.GravitySystem;
-import com.deepfried.component.HitboxComponent;
 import com.deepfried.system.MovementSystem;
-import com.deepfried.component.PositionComponent;
-import com.deepfried.game.Room;
-import com.deepfried.component.VelocityComponent;
-import com.deepfried.game.World;
 
 public class DebugScreen implements Screen {
-    Engine engine;
-    DebugRenderSystem renderSystem;
-    public Room room;
-    Entity player;
+    private final Engine engine = new Engine();
+    private final OrthogonalTiledMapRenderer renderer;
+    private final OrthographicCamera camera = new OrthographicCamera(256, 192);
+//    public Room room;
 
     final float dt = 1/60f;
     double accumulator = 0;
-    public World world;
-    public Area area;
 
-    public DebugScreen(World world) {
-        this.world = world;
-        this.area = this.world.areas.first();
-//        this.room = area.paths.first().get(0).getFromNode();
+//    public DebugScreen(World world) {
+//        this.area = this.world.areas.first();
+//        this.room = area.rooms.get(0);  //TODO generate rooms
+//        this.renderSystem = new DebugRenderSystem();
+//        this.room.addTo(engine);
+//        this.engine.addSystem(renderSystem);
+//    }
+
+    public DebugScreen(TiledMap map) {
+        this.renderer = new OrthogonalTiledMapRenderer(map);
+
+
     }
 
     @Override
     public void show() {
-        engine = new Engine();
-        renderSystem = new DebugRenderSystem();
-        player = new Entity()
-                .add(new PositionComponent((room.getTileX() + 8) * 16, (room.getTileY() + 8) * 16))
-                .add(new ColorComponent(Color.ORANGE))
-                .add(new HitboxComponent(10, 42))
-                .add(new VelocityComponent())
-                .add(new GravityComponent())
-                .add(new ControllerComponent())
-                .add(new CameraFollowComponent());
-        engine.addEntity(player);
         engine.addSystem(new GravitySystem());
         engine.addSystem(new ControllerSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new MovementSystem());
-        room.addTo(engine);
-        engine.addSystem(renderSystem);
 
     }
 
@@ -74,12 +58,14 @@ public class DebugScreen implements Screen {
         //do the render
         float alpha = (float) (accumulator / dt);
 
-        engine.getSystem(DebugRenderSystem.class).update(1 - alpha);
+        camera.update();
+        renderer.setView(camera);
+        renderer.render();
     }
 
     @Override
     public void resize(int width, int height) {
-        renderSystem.resize(width, height);
+
     }
 
     @Override
@@ -102,9 +88,9 @@ public class DebugScreen implements Screen {
 
     }
 
-    public void setRoom(Room to) {
-        room.removeFrom(engine);
-        this.room = to;
-        room.addTo(engine);
-    }
+//    public void setRoom(Room to) {
+//        room.removeFrom(engine);
+//        this.room = to;
+//        room.addTo(engine);
+//    }
 }

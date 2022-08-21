@@ -30,12 +30,18 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../android/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/renderscript_source_output_dir/debug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/res/resValues/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/res/rs/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/source/buildConfig/androidTest/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android/build/generated/res/resValues/androidTest/debug" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../android/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../android/build" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 31 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-android:1.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-android:1.11.0" level="project" />
     <orderEntry type="module-library">
       <library name="Gradle: com.badlogicgames.ashley:ashley:1.7.3">
         <CLASSES>
@@ -63,32 +69,45 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: com.badlogicgames.gdx:gdx:1.10.0">
+      <library name="Gradle: com.badlogicgames.gdx:gdx:1.11.0">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.10.0/74c240f79dc4fb6b766a834249600d0a019d0489/gdx-1.10.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.11.0/ffe1206d1004cd9e40027e28964be0fea0399af7/gdx-1.11.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.10.0/26c95ab888727a69338fd2292e54dee12741e856/gdx-1.10.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.11.0/f14119fc8ded4d354ed8423469c4cf610f41312/gdx-1.11.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.10.0/126a80a5ef6d32683bc563d4015c6c163d690f15/gdx-1.10.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.11.0/ea3e9eccc5c09636f405e345039b62376465a6f4/gdx-1.11.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.1.0">
+      <library name="Gradle: com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.1.0/7c282de3958795a6da5dd3cc2d64b9389a8f9142/gdx-controllers-core-2.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-jnigen-loader/2.3.1/2d472f69243631fbcb3d4c3f93dd2e137a6cb084/gdx-jnigen-loader-2.3.1.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.1.0/5177d31497503cd086ae1d4f175cfa2f503bc5fe/gdx-controllers-core-2.1.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-jnigen-loader/2.3.1/fb385783eebaf04e9f48392dd76e0b46575d5647/gdx-jnigen-loader-2.3.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.1.0/42d4292543ec88a1f359cecec817ba49e3589590/gdx-controllers-core-2.1.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-jnigen-loader/2.3.1/8228a038af98f2d0fa7b23ea7b4fa330af832305/gdx-jnigen-loader-2.3.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0@aar" level="project" />
+    <orderEntry type="module-library">
+      <library name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.2.1">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.2.1/8aca0dc002a8daf6a6d28f49c44e25189dd93fd7/gdx-controllers-core-2.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.2.1/115de6a9cacff327ad727656b45359eb092df489/gdx-controllers-core-2.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx-controllers/gdx-controllers-core/2.2.1/dc2dc16ae45cf551d3bd5c537fa00a0033e6057f/gdx-controllers-core-2.2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-android:2.2.1@aar" level="project" />
     <orderEntry type="module" module-name="Metrogue.core" />
   </component>
 </module>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="Door" type="Entity" width="8" height="48">
+  <properties>
+   <property name="Color" type="color" value="#ff00aaff"/>
+   <property name="outX" type="float" value="232"/>
+   <property name="outY" type="float" value="144"/>
+   <property name="toMap" value="sandbox2.tmx"/>
+  </properties>
+ </object>
+</template>

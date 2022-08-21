@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="75beba6c-aa00-4951-8cf8-4de01f83ab7d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/Door.tx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/Metrogue.tiled-project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/Metrogue.tiled-session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/Player.tx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/collision.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/debugTiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/landing.tmx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/vagabond.atlas" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/assets/vagabond.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/build/generated/source/buildConfig/androidTest/debug/com/deepfried/game/test/BuildConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/build/generated/source/buildConfig/debug/com/deepfried/game/BuildConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/libs/arm64-v8a/libgdx.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/libs/armeabi-v7a/libgdx.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/libs/x86/libgdx.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/libs/x86_64/libgdx.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/AnimationComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/CollapsibleComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/FallThroughComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/JumpThroughComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/OneWayComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/PlayerComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/PolylineComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/screen/GameScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/AnimationSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/RenderSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/TiledMapRenderSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_android_2_1_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_core_2_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_core_2_1_0_sources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_desktop_2_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_gwt_2_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_gwt_2_1_0_sources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_controllers_gdx_controllers_ios_2_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_1_10_0_sources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_android_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_gwt_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_gwt_1_10_0_sources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_headless_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_lwjgl_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_backend_robovm_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_freetype_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_platform_1_10_0_natives_desktop.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_platform_1_10_0_natives_ios.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_badlogicgames_gdx_gdx_tools_1_10_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mobidevelop_robovm_robovm_cocoatouch_2_3_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mobidevelop_robovm_robovm_objc_2_3_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mobidevelop_robovm_robovm_rt_2_3_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_lwjgl_util_2_9_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/android/Metrogue.android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/android/Metrogue.android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/core/Metrogue.core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/core/Metrogue.core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/desktop/Metrogue.desktop.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/desktop/Metrogue.desktop.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/html/Metrogue.html.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/html/Metrogue.html.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ios/Metrogue.ios.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ios/Metrogue.ios.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/source-classes-mapping.txt" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/tmp/compileJava/source-classes-mapping.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/CameraFollowComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/CameraFollowComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/ControllerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/ControllerComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/DoorComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/DoorComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/GravityComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/GravityComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/PositionComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/component/PositionComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/component/TileComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/Area.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/AreaGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/CartesianGraph.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/GdxGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/game/GdxGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/RectangleGraph.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/Room.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/RoomConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/RoomGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/Sector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/TileID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/World.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/WorldArea.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/game/WorldGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/screen/DebugScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/screen/DebugScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/screen/LoadingScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/screen/LoadingScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/screen/MapScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/CollisionSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/CollisionSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/ControllerSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/ControllerSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/DebugRenderSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/DebugRenderSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/GravitySystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/GravitySystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/MovementSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/MovementSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/deepfried/system/TileSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/deepfried/system/TileSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/deepfried/game/desktop/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/com/deepfried/game/desktop/DesktopLauncher.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/desktop">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Metrogue" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Metrogue" type="f1a62948:ProjectNode" />
+                <item name="html" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Metrogue" type="f1a62948:ProjectNode" />
+                <item name="html" type="2d1252cf:ModuleNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1uj6Fm6bn06Etf1SgHthTQpbtCV" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ResourceManagerPrefKey.ResourceType" value="ANIMATOR" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Desktop/Barebones.java" />
+    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor.code.editing" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.deepfried.component" />
+      <recent name="com.deepfried.game" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="com.deepfried.game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\stuar\OneDrive\Java Workspace" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.deepfried.system" />
+      <recent name="com.deepfried.component" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.deepfried.system" />
+      <recent name="com.deepfried.screen" />
+      <recent name="com.deepfried.game" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="com.deepfried.system.TileSystem" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.DesktopLauncher">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="android" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="Metrogue.android" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Barebones" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Barebones" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.deepfried.game.desktop.DesktopLauncher" />
+      <module name="Metrogue.desktop" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/android/assets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.deepfried.game.desktop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Metrogue:desktop [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/desktop" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Android App.android" />
+      <item itemvalue="Application.DesktopLauncher" />
+      <item itemvalue="Application.Barebones" />
+      <item itemvalue="Gradle.Metrogue:desktop [run]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Barebones" />
+        <item itemvalue="Application.DesktopLauncher" />
+        <item itemvalue="Gradle.Metrogue:desktop [run]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75beba6c-aa00-4951-8cf8-4de01f83ab7d" name="Default Changelist" comment="" />
+      <created>1625166550663</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1625166550663</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2325" y="200" key="#com.intellij.ide.util.MemberChooser" timestamp="1652915936756">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state x="2325" y="200" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1652915936756" />
+    <state width="1157" height="538" key="GridCell.Tab.0.bottom" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.0.center" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.0.center/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.0.left" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.0.left/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.0.right" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.0.right/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.1.bottom" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.1.center" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.1.center/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.1.left" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.1.left/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state width="1157" height="538" key="GridCell.Tab.1.right" timestamp="1653011873666">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state width="1157" height="538" key="GridCell.Tab.1.right/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653011873666" />
+    <state x="2220" y="241" key="refactoring.ChangeSignatureDialog" timestamp="1652825780794">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state x="2220" y="241" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1652825780794" />
+    <state x="2183" y="-11" width="672" height="678" key="search.everywhere.popup" timestamp="1653008198669">
+      <screen x="1920" y="-446" width="1200" height="1880" />
+    </state>
+    <state x="2183" y="-11" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.-446.1200.1880@1920.-446.1200.1880" timestamp="1653008198669" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint suspend="THREAD" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint suspend="THREAD" type="java-exception">
+          <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/com/deepfried/screen/GameScreen.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.badlogic.gdx.maps.MapObjects" memberName="objects" />
+        <PinnedItemInfo parentTag="com.deepfried.game.CartesianGraph$CartesianConnection" memberName="from" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>

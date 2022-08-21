@@ -1,0 +1,41 @@
+
+vagabond.png
+size: 556, 36
+format: RGBA4444
+filter: Nearest, Nearest
+repeat: none
+idle
+  rotate: false
+  xy: 456, 2
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 358, 2
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+flip
+  rotate: false
+  xy: 260, 2
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+landing
+  rotate: false
+  xy: 522, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+run
+  rotate: false
+  xy: 2, 2
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1

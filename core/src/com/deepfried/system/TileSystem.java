@@ -6,260 +6,243 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.deepfried.component.GravityComponent;
-import com.deepfried.component.HitboxComponent;
+import com.deepfried.component.ShapeComponent;
 import com.deepfried.component.PositionComponent;
-import com.deepfried.component.TileComponent;
 import com.deepfried.component.VelocityComponent;
-import com.deepfried.game.Room;
-import com.deepfried.game.TileID;
-import com.sun.tools.javac.util.Pair;
-
-import static com.deepfried.game.Room.PPT;
-import static com.deepfried.game.Room.TPS;
+import com.deepfried.utility.Segment;
 
 public class TileSystem extends EntitySystem {
-    private static final Vector2 VECTOR = new Vector2(), VECTOR_2 = new Vector2();
+    private static final Vector2 VECTOR = new Vector2();
     private static final float MARGIN = 1/256f;
+    private static final float[] SLOPE_SCALING = new float[]{1f, 0.85f, 0.39f};
 
     private final ComponentMapper<PositionComponent> positions = ComponentMapper.getFor(PositionComponent.class);
     private final ComponentMapper<VelocityComponent> velocities = ComponentMapper.getFor(VelocityComponent.class);
-    private final ComponentMapper<HitboxComponent> hitboxes = ComponentMapper.getFor(HitboxComponent.class);
-    private final ComponentMapper<TileComponent> tiles = ComponentMapper.getFor(TileComponent.class);
+    private final ComponentMapper<ShapeComponent> shapes = ComponentMapper.getFor(ShapeComponent.class);
     private final ComponentMapper<GravityComponent> gravities = ComponentMapper.getFor(GravityComponent.class);
 
     private ImmutableArray<Entity> entities;
-    public final Entity[][] tileMap;
+    public final TiledMap map;
+    public final TiledMapTileLayer tileLayer;
     public float x, y;
 
-    public TileSystem(Room room) {
-        this.tileMap = new Entity[MathUtils.round(room.width * TPS)][Math.round(room.height * TPS)];
-        this.x = room.x * TPS;
-        this.y = room.y * TPS;
-    }
-
-    public Entity getTile(int x, int y) {
-        if(0 <= x && x < tileMap.length && 0 <= y && y < tileMap[x].length)
-            return tileMap[x][y];
-        else
-            return null;
-    }
-
-    public Entity getTile(float x, float y) {
-        int tx = MathUtils.floor(x / PPT); //tile's x index
-        int ty = MathUtils.floor(y / PPT); //tile's y index
-        tx -= this.x;
-        ty -= this.y;
-
-        return getTile(tx, ty);
+    public TileSystem(TiledMap map) {
+        this.map = map;
+        this.tileLayer = (TiledMapTileLayer) map.getLayers().get("Collision Layer");
     }
 
     @Override
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class, HitboxComponent.class).get());
+        entities = engine.getEntitiesFor(Family.all(PositionComponent.class, VelocityComponent.class, ShapeComponent.class).get());
     }
 
     @Override
     public void update(float deltaTime) {
-        for (Entity entity : entities) {
-            PositionComponent p = positions.get(entity);
-            VelocityComponent v = velocities.get(entity);
-            Rectangle box = Rectangle.tmp.set(hitboxes.get(entity)).setPosition(p);
-            Vector2 center = box.getCenter(VECTOR_2);
-            GravityComponent g = null;
-            if(gravities.has(entity)) g = gravities.get(entity);
+        for(Entity entity : entities) {
+            PositionComponent position = positions.get(entity);
+            Rectangle rectangle = shapes.get(entity).getRectangle();
+            Vector2 v = VECTOR.set(velocities.get(entity));
+            GravityComponent g = gravities.get(entity);
+            Rectangle box = Rectangle.tmp.set(rectangle).setPosition(position);
 
-            boolean inSlope = false;
-            Entity tile = getTile(center.x, p.y);
-            if(tile != null) {
-                p.tile = tiles.get(tile);
-                inSlope = p.tile.id == TileID.SLOPE || p.tile.id == TileID.HALF_SLOPE;
-            }
+            float entityLeft = box.getX();
+            float entityRight = entityLeft + box.getWidth();
+            float entityBottom = box.getY();
+            float entityTop = entityBottom + box.getHeight();
+            float entityCenterX = entityLeft + box.getWidth() / 2f;
+            float x = v.x > 0 ? entityRight + MARGIN : entityLeft;
+            float y = v.y > 0 ? entityTop + MARGIN : entityBottom;
+            float dx = v.x; //the amount to move the entity,
+            float dy = v.y; //the amount to move the entity,
+            float[] sensors, vertices;
 
-            float newX = -1;
-            float x0 = p.previous.x;
-            float x1 = p.x;
-            if(x0 < x1) {
-                x0 += box.getWidth();
-                x1 += box.getWidth();
-            }
+            Segment bottomSlope = null, topSlope = null;
+            TiledMapTileLayer.Cell bottomCell = getCell(entityCenterX, entityBottom);
+            TiledMapTileLayer.Cell topCell = getCell(entityCenterX, entityTop);
+            if(bottomCell != null && !isInsideUp(bottomCell)) bottomSlope = getSlope(entityCenterX, entityBottom);
+            if(topCell != null && isInsideUp(topCell)) topSlope = getSlope(entityCenterX, entityTop);
 
-            p.grounded = false;
-            //do horizontal collision checks all the way up the height of the entity's hitbox
-            //round up the bottom and the height to the nearest tile
-            float h = box.getHeight();
-            float ceil = MathUtils.ceil(h / PPT);
-            for(int i = inSlope ? 1 : 0; i <= ceil; i++) {
-                float y = p.previous.y + Math.min(h, i * PPT);
-                float tx = horizontalCheck(x0, x1, y);
-                if(Math.abs(x0 - tx) < Math.abs(x0 - newX))
-                    newX = tx;
-
-                if(g != null && g.acceleration.x != 0 &&
-                        Math.copySign(1, g.acceleration.x) == Math.copySign(1, v.x) &&
-                        isSolid(p.x + g.acceleration.x, y))
-                    p.grounded = true;
-            }
-
-            if (newX >= 0) {
-                p.x = newX - (x0 < x1 ? box.getWidth() : 0);
-                v.x = 0;
-            }
-
-            float newY = -1;
-            float y0 = p.previous.y;
-            float y1 = p.y;
-            if(y0 < y1) {
-                y0 += box.getHeight();
-                y1 += box.getHeight();
-            }
-
-            float w = box.getWidth();
-            ceil = MathUtils.ceil(w / PPT);
-            for(int i = 0; i <= ceil; i++) {
-                float x = inSlope ? center.x : p.x + Math.min(w, i * PPT);
-                Pair<TileID, Float> collision = verticalChecks(x, center.x, y0, y1);
-                float ty = collision.snd;
-                if(collision.fst == TileID.SLOPE || collision.fst == TileID.HALF_SLOPE) {
-                    newY = ty;
-                } else if(Math.abs(y0 - ty) < Math.abs(y0 - newY))
-                    newY = ty;
-
-                if(g != null && g.acceleration.y != 0 &&
-                        Math.copySign(1, g.acceleration.y) == Math.copySign(1, v.y) &&
-                        isSolid(x, p.y + Math.copySign(2, g.acceleration.y)))
-                    p.grounded = true;
-            }
-
-            if (newY >= 0) {
-                p.y = newY - (y0 < y1 ? box.getHeight() : 0);
-                v.y = 0;
-            }
-        }
-    }
-
-    private Pair<TileID, Float> verticalChecks(float x, float centerX, float y0, float y1) {
-        float ty = -1;
-
-        for(float y : new float[]{y0, y1}) {
-            Entity test = getTile(x, y);
-            if (test != null) {
-                TileComponent tile = tiles.get(test);
-                Rectangle box = Rectangle.tmp2.set(hitboxes.get(test).setPosition(positions.get(test)));
-                float top = box.getY() + box.getHeight();
-                switch (tile.id) {
-                    case FULL:
-                        if (y < box.getCenter(VECTOR).y) ty = box.getY() - MARGIN;
-                        else ty = top + MARGIN;
-                        break;
-                    case HALF_FULL:
-                        if(box.y + box.height / 2 <= y && y <= top)
-                            ty = top + MARGIN;
-                        if(box.y <= y && y < box.y + box.height / 2)
-                            ty = box.getY() - MARGIN;
-                        break;
-                    case PLATFORM:
-                        if(y1 <= top && top <= y0)
-                            ty = top + MARGIN;
-                        break;
-                    case HALF_SLOPE:
-                    case SLOPE:
-                        float xs = box.getX() + tile.id.x0,
-                                ys = box.getY() + tile.id.y0,
-                                m = (tile.flipX ^ tile.flipY ? -1 : 1) * tile.id.m;
-
-                        if(box.getX() <= centerX && centerX < box.getX() + box.getWidth()) {
-                            ty = m * (centerX - xs) + ys;
-                            if(y1 > ty + 5 && !tile.flipY)
-                                ty = -1;
-                            if(y1 < ty && tile.flipY)
-                                ty = -1;
-                        }
-                        break;
+            sensors = getSensors(entityBottom, entityTop, tileLayer.getTileHeight()); //x-axis sensors
+            for(float sensorY : sensors) {
+                if((sensorY == entityBottom && bottomSlope != null)
+                        || (sensorY == entityTop && topSlope != null))
+                    continue;
+                Polygon polygon = getPolygon(x + dx, sensorY);
+                if(polygon == null) continue;
+                vertices = polygon.getTransformedVertices();
+                for(int p = 0; p < vertices.length; p += 2) {
+                    Segment edge = new Segment(vertices[p], vertices[p + 1],
+                            vertices[(p + 2) % vertices.length], vertices[(p + 3) % vertices.length]);
+                    if(edge.minY != edge.maxY && edge.minX != edge.maxX) continue; //polygon edge is a slope
+                    if(edge.minY < entityTop && edge.maxY > sensorY
+                            && entityRight + dx > edge.minX && entityLeft + dx < edge.maxX) {
+                        if(v.x > 0) dx = Math.min(dx, edge.minX - x);
+                        if(v.x < 0) dx = Math.max(dx, edge.maxX - x);
+                    }
                 }
-                if(ty >= 0)
-                    return new Pair<>(tile.id, ty);
             }
-        }
-        return new Pair<>(null, ty);
-    }
 
-    private float horizontalCheck(float x0, float x1, float y) {
-        float tx = -1;
+			if(bottomSlope != null) {
+				float scale = SLOPE_SCALING[0];
+				if(bottomSlope.m >= 1) scale = SLOPE_SCALING[1];
+				if(bottomSlope.m >= 2) scale = SLOPE_SCALING[2];
+				dx *= scale;
+				float distanceToEdge = bottomSlope.getY(entityCenterX + dx) - entityBottom;
+				dy = Math.max(dy, distanceToEdge);
+			} else if(topSlope != null) {
+                float scale = SLOPE_SCALING[0];
+                if(topSlope.m >= 1) scale = SLOPE_SCALING[1];
+                if(topSlope.m >= 2) scale = SLOPE_SCALING[2];
+				dx *= scale;
+                float distanceToEdge = topSlope.getY(entityCenterX + dx) - entityTop;
+                dy = Math.min(dy, distanceToEdge);
+			}
 
-        Entity test = getTileExcludeX(x1, y);
-        if (test != null) {
-            TileComponent tile = tiles.get(test);
-            Rectangle box = Rectangle.tmp2.set(hitboxes.get(test).setPosition(positions.get(test)));
-            switch (tile.id) {
-                case SLOPE:
-                case HALF_SLOPE:
-                    if(box.contains(x1, y)) {
-                        if(tile.flipX) {
-                            if (x0 <= box.getX())
-                                tx = box.getX() - MARGIN;
-                        } else {
-                            if (x0 >= box.getX() + box.getWidth())
-                                tx = box.getX() + box.getWidth();
-                        }
+            Segment underSlope = null;
+			if(dy <= 0) underSlope = getSlope(entityCenterX + dx, entityBottom + dy);
+
+            sensors = getSensors(entityLeft + dx, entityRight + dx, tileLayer.getTileWidth()); //y-axis sensors
+            if(bottomSlope != null || topSlope != null || underSlope != null)
+                sensors = new float[]{entityCenterX + dx};
+            for (float sensorX : sensors) {
+                Polygon polygon = getPolygon(sensorX, y + dy);
+                if(polygon == null) continue;
+                vertices = polygon.getTransformedVertices();
+                for (int p = 0; p < vertices.length; p += 2) {
+                    Segment edge = new Segment(vertices[p], vertices[p + 1],
+                            vertices[(p + 2) % vertices.length], vertices[(p + 3) % vertices.length]);
+                    if (edge.xa == edge.xb) continue; //polygon edge parallel to y-axis
+                    if (edge.ya != edge.yb) continue; //polygon edge is a slope
+                    //ya == yb and the edge is perpendicular to y-axis
+                    if (entityBottom + dy < edge.ya && edge.ya < entityTop + dy
+                            && edge.minX < entityRight && entityLeft < edge.maxX) {
+                        //the edge in question overlaps the range of where the entity is going to be
+                        float distanceToEdge = edge.ya - y;
+                        if (v.y > 0) dy = Math.min(dy, distanceToEdge);
+                        if (v.y < 0) dy = Math.max(dy, distanceToEdge);
                     }
-                    break;
-                case HALF_FULL:
-                    if(box.contains(x1, y)) {
-                        if (x0 <= box.getX())
-                            tx = box.getX() - MARGIN;
-                        if (x0 >= box.getX() + box.getWidth())
-                            tx = box.getX() + box.getWidth();
-                    }
-                    break;
-                case FULL:
-                    if (x0 >= box.getX() + box.getWidth())
-                        tx = box.getX() + box.getWidth();
-                    if (x0 <= box.getX())
-                        tx = box.getX() - MARGIN;
-                    break;
+                }
             }
-            if(tx >= 0) return tx;
 
+
+
+            if(underSlope != null) {
+                float slopeY = underSlope.getY(entityCenterX + dx);
+                float distanceToEdge = slopeY - entityBottom;
+                TiledMapTileLayer.Cell cell = getCell(entityCenterX + dx, slopeY);
+                if(g.grounded && cell != null && !isInsideUp(cell)) dy = distanceToEdge;
+            }
+
+            velocities.get(entity).set(dx, dy);
         }
-        return tx;
     }
+	
+	public boolean isInsideUp(TiledMapTileLayer.Cell cell) {
+		if(cell.getRotation() == TiledMapTileLayer.Cell.ROTATE_0) return cell.getFlipVertically();
+		if(cell.getRotation() == TiledMapTileLayer.Cell.ROTATE_270) return cell.getFlipHorizontally();
+		if(cell.getRotation() == TiledMapTileLayer.Cell.ROTATE_90) return !cell.getFlipHorizontally();
+		return false;
+	}
 
-    private Entity getTileExcludeX(float x, float y) {
-        Entity tile = getTile(x, y);
-
-        if(tile != null) {
-            Rectangle box = Rectangle.tmp2.set(hitboxes.get(tile).setPosition(positions.get(tile)));
-            if (x > box.x && x < box.x + box.width && y >= box.y && y <= box.y + box.height)
-                return tile;
+    Segment getSlope(float x, float y) {
+        TiledMapTileLayer.Cell cell = getCell(x, y);
+        if(cell == null) return null;
+        Polygon polygon = getPolygon(x, y);
+        if(polygon == null) return null;
+        float[] vertices = polygon.getTransformedVertices();
+        for (int p = 0; p < vertices.length; p += 2) {
+            Segment edge = new Segment(vertices[p], vertices[p + 1],
+                    vertices[(p + 2) % vertices.length], vertices[(p + 3) % vertices.length]);
+            if (edge.xa != edge.xb && edge.ya != edge.yb) {
+                //polygon edge is a slope
+                if(edge.minX <= x && x <= edge.maxX && edge.minY <= y && y <= edge.maxY)
+                    return edge;
+            }
         }
         return null;
     }
 
-    public boolean isSolid(float x, float y) {
-        Entity entity = getTile(x, y);
-        if(entity == null) return false;
-
-        TileComponent tile = tiles.get(entity);
-        HitboxComponent box = hitboxes.get(entity);
-        switch (tile.id) {
-            case FULL:
-                return true;
-            case HALF_FULL:
-            case PLATFORM:
-                return box.contains(x, y);
-            case HALF_SLOPE:
-            case SLOPE:
-                float xs = box.getX() + tile.id.x0,
-                        ys = box.getY() + tile.id.y0,
-                        m = (tile.flipX ^ tile.flipY ? -1 : 1) * tile.id.m;
-
-                float boundY = m * (x - xs) + ys;
-                return tile.flipY ^ y <= boundY;
+    float[] getSensors(float start, float end, float interval) {
+		//returns array of float values from start to end with a constant difference of "interval"
+        float width = end - start;
+        int size = MathUtils.ceil(width / interval) + 1;
+        float[] sensors = new float[size];
+        for(int s = 0; s < size; s++) {
+            sensors[s] = Math.min(start + s * interval, end);
         }
-        return false;
+        return sensors;
     }
+
+    private Polygon getPolygon(float x, float y) {
+        TiledMapTileLayer.Cell cell = getCell(x, y);
+        if(cell == null) return null;
+        TiledMapTile tile = cell.getTile();
+        Array<PolygonMapObject> mapObjects = tile.getObjects().getByType(PolygonMapObject.class);
+        if(mapObjects.size < 1) return null;
+        PolygonMapObject mapObject = mapObjects.first();
+        if(mapObject == null) return null;
+        Polygon polygon = mapObject.getPolygon();
+        if(polygon == null) return null;
+        float centerX = mapObject.getProperties().get("x", Float.class); //relative center x-value of the polygon
+        float centerY = mapObject.getProperties().get("y", Float.class); //relative center y-value of the polygon
+        float tileX = MathUtils.floor(x / tileLayer.getTileWidth()) * tileLayer.getTileWidth(); //world x-value of the tile
+        float tileY = MathUtils.floor(y / tileLayer.getTileHeight()) * tileLayer.getTileHeight(); //world y-value of the tile
+        polygon.setPosition(tileX + centerX, tileY + centerY); //world position of the polygon
+        float scaleX = cell.getFlipHorizontally() ? -1 : 1;
+        float scaleY = cell.getFlipVertically() ? -1 : 1;
+        polygon.setScale(scaleX, scaleY);
+        switch(cell.getRotation()) {
+            case TiledMapTileLayer.Cell.ROTATE_0:
+                polygon.setRotation(0f);
+                break;
+            case TiledMapTileLayer.Cell.ROTATE_90:
+                polygon.setRotation(90f);
+                break;
+            case TiledMapTileLayer.Cell.ROTATE_180:
+                polygon.setRotation(180f);
+                break;
+            case TiledMapTileLayer.Cell.ROTATE_270:
+                polygon.setRotation(270f);
+                break;
+
+        }
+        return polygon;
+    }
+
+    private int getTileX(float x) {
+        // returns the x index of a x value
+        int tx = MathUtils.floor(x / tileLayer.getTileWidth());
+        tx -= this.x;
+
+        return tx;
+    }
+
+    private int getTileY(float y) {
+        // returns the y index of a y value
+        int ty = MathUtils.floor(y / tileLayer.getTileHeight());
+        ty -= this.y;
+
+        return ty;
+    }
+
+    TiledMapTileLayer.Cell getCell(float x, float y) {
+        return tileLayer.getCell(getTileX(x), getTileY(y));
+    }
+
+    public boolean isSolid(float x, float y) {
+        Polygon polygon = getPolygon(x, y);
+        if(polygon == null) return false;
+        return polygon.contains(x, y);
+    }
+
 }

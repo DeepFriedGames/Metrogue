@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="Player" type="Entity" width="9" height="27">
+  <properties>
+   <property name="Animation" value="vagabond.atlas"/>
+   <property name="CameraFollow" value="4.5,9"/>
+   <property name="Color" type="color" value="#ffffaa00"/>
+   <property name="Controller" value=""/>
+   <property name="Gravity" value=""/>
+   <property name="Velocity" value=""/>
+  </properties>
+ </object>
+</template>

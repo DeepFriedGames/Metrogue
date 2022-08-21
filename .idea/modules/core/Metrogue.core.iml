@@ -10,7 +10,7 @@
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
       <configuration>
-        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/../../../core/build" />
+        <option name="BUILD_FOLDER_PATH" />
         <option name="BUILDABLE" value="true" />
       </configuration>
     </facet>
@@ -28,7 +28,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.ashley:ashley:1.7.3" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-ai:1.8.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.10.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.11.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx-controllers:gdx-controllers-core:2.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-jnigen-loader:2.3.1" level="project" />
   </component>
 </module>
