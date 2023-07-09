@@ -29,6 +29,8 @@ import com.deepfried.utility.Segment;
 
 public class CollisionSystem extends EntitySystem {
 	private ImmutableArray<Entity> entities;
+	private ImmutableArray<Entity> obstructions;
+
 
 	private final ComponentMapper<PositionComponent> positions = ComponentMapper.getFor(PositionComponent.class);
 	private final ComponentMapper<VelocityComponent> velocities = ComponentMapper.getFor(VelocityComponent.class);
@@ -43,7 +45,7 @@ public class CollisionSystem extends EntitySystem {
 	@Override
 	public void addedToEngine(Engine engine) {
 		entities = engine.getEntitiesFor(Family.all(PositionComponent.class, CollisionComponent.class).get());
-
+        obstructions = engine.getEntitiesFor(Family.all(CollisionComponent.class, PositionComponent.class).one(OneWayComponent.class, JumpThroughComponent.class, CollapsibleComponent.class, ShapeComponent.class).get());
 	}
 
 	@Override
@@ -208,7 +210,7 @@ public class CollisionSystem extends EntitySystem {
 
 	public boolean isPathObstructed(float xa, float ya, float xb, float yb) {
 		//returns whether an entityA in the alwaysChecking array obstructs the path from (xa, ya) to (xb, yb)
-		for(Entity obstruction : entities) {
+		for(Entity obstruction : obstructions) {
 			if(oneWays.has(obstruction)) {
 				Polyline polyline = shapes.get(obstruction).getPolyline();
 				float[] vertices = polyline.getTransformedVertices();
@@ -265,8 +267,9 @@ public class CollisionSystem extends EntitySystem {
 			CollisionComponent collider = collisions.get(obstruction);
 			if((collider.mask & CollisionComponent.SOLID) > 0) {
 				if(shapes.has(obstruction)) {
-					return shapes.get(obstruction).getShape().contains(xa, ya)
-							|| shapes.get(obstruction).getShape().contains(xb, yb);
+					if(shapes.get(obstruction).getShape().contains(xa, ya)
+							|| shapes.get(obstruction).getShape().contains(xb, yb))
+					return true;
 				}
 			}
 		}
