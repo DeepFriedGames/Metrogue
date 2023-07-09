@@ -8,8 +8,8 @@ com/deepfried/component/CollisionComponent.java
  com.deepfried.component.CollisionComponent
 com/deepfried/game/KeyItem.java
  com.deepfried.game.KeyItem
-com/deepfried/screen/DebugScreen.java
- com.deepfried.screen.DebugScreen
+com/deepfried/component/JumpThroughComponent.java
+ com.deepfried.component.JumpThroughComponent
 com/deepfried/component/DebugShapeComponent.java
  com.deepfried.component.DebugShapeComponent
 com/deepfried/component/PositionComponent.java
@@ -30,16 +30,16 @@ com/deepfried/system/DebugRenderSystem.java
  com.deepfried.system.DebugRenderSystem
 com/deepfried/system/MovementSystem.java
  com.deepfried.system.MovementSystem
-com/deepfried/screen/GameScreen.java
- com.deepfried.screen.GameScreen
+com/deepfried/system/RenderSystem.java
+ com.deepfried.system.RenderSystem
 com/deepfried/component/ColorComponent.java
  com.deepfried.component.ColorComponent
 com/deepfried/component/OneWayComponent.java
  com.deepfried.component.OneWayComponent
 com/deepfried/component/AnimationComponent.java
  com.deepfried.component.AnimationComponent
-com/deepfried/system/CollisionSystem.java
- com.deepfried.system.CollisionSystem
+com/deepfried/game/DivisionHeuristic.java
+ com.deepfried.game.DivisionHeuristic
 com/deepfried/utility/Segment.java
  com.deepfried.utility.Segment
 com/deepfried/system/AnimationSystem.java
@@ -54,15 +54,15 @@ com/deepfried/system/TileSystem.java
  com.deepfried.system.TileSystem
 com/deepfried/game/MovementType.java
  com.deepfried.game.MovementType
+com/deepfried/screen/GameScreen.java
+ com.deepfried.screen.GameScreen
+com/deepfried/screen/DebugScreen.java
+ com.deepfried.screen.DebugScreen
 com/deepfried/system/ControllerSystem.java
  com.deepfried.system.ControllerSystem
  com.deepfried.system.ControllerSystem$1
  com.deepfried.system.ControllerSystem$MovementState
-com/deepfried/game/DivisionHeuristic.java
- com.deepfried.game.DivisionHeuristic
-com/deepfried/system/RenderSystem.java
- com.deepfried.system.RenderSystem
-com/deepfried/component/JumpThroughComponent.java
- com.deepfried.component.JumpThroughComponent
+com/deepfried/system/CollisionSystem.java
+ com.deepfried.system.CollisionSystem
 com/deepfried/system/GravitySystem.java
  com.deepfried.system.GravitySystem

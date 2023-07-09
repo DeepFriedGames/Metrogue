@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "landing.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -41,11 +41,6 @@
     "map.tileWidth": 16,
     "map.width": 45,
     "openFiles": [
-        "landing.tmx",
-        "collision.tsx",
-        "landing.tsx",
-        "second_layer.tsx",
-        "front_layer.tsx"
     ],
     "project": "Metrogue.tiled-project",
     "property.type": "string",
